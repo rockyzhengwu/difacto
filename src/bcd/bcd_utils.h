@@ -10,6 +10,7 @@
 #include <condition_variable>
 #include <vector>
 #include <algorithm>
+#include <cmath>
 #include "dmlc/data.h"
 #include "difacto/sarray.h"
 #include "dmlc/memory_io.h"

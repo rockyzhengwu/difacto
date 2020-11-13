@@ -8,6 +8,7 @@
 #include <thread>
 #include <vector>
 #include <utility>
+#include <cmath>
 #include "dmlc/data.h"
 #include "reader/batch_reader.h"
 #include "reader/reader.h"
@@ -16,6 +17,7 @@
 #include "data/row_block.h"
 #include "data/localizer.h"
 #include "dmlc/timer.h"
+#include "dmlc/io.h"
 #include "difacto/node_id.h"
 #include "loss/bin_class_metric.h"
 #include "./sgd_updater.h"
@@ -65,6 +67,9 @@ void SGDLearner::RunScheduler() {
     pre_loss = train_prog.loss;
     pre_val_auc = val_prog.auc;
   }
+  // todo save model
+  dmlc::Stream *ofs = CHECK_NOTNULL(dmlc::Stream::Create(param_.model_out.c_str(), "w"));
+  store_->updater()->Save(true, ofs);
 }
 
 void SGDLearner::RunEpoch(int epoch, int job_type, sgd::Progress* prog) {
@@ -202,6 +207,10 @@ void SGDLearner::IterateData(const sgd::Job& job, sgd::Progress* progress) {
         job.type == sgd::Job::kTraining && job.epoch == 0;
     Localizer lc(-1, blk_nthreads_);
     lc.Compact(reader->Value(), data, feaids.get(), push_cnt ? feacnt.get() : nullptr);
+    // std::cout << feaids->size() << "feaids get \n";
+    // for(int i=0; i<feaids->size(); ++i){
+    //   std::cout << feaids->at(i) << "\n";
+    // }
 
     // save results into batch
     BatchJob batch;

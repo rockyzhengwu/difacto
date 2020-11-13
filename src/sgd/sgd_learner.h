@@ -43,6 +43,7 @@ class SGDLearner : public Learner {
     using sgd::Job;
     sgd::Progress prog;
     Job job; job.ParseFromString(args);
+
     if (job.type == Job::kTraining ||
         job.type == Job::kValidation) {
       IterateData(job, &prog);

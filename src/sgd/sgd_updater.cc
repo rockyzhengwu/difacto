@@ -2,8 +2,10 @@
  * Copyright (c) 2015 by Contributors
  */
 #include <string.h>
+#include <math.h>
 #include "./sgd_updater.h"
 #include "difacto/store.h"
+
 namespace difacto {
 
 KWArgs SGDUpdater::Init(const KWArgs& kwargs) {
@@ -144,6 +146,41 @@ void SGDUpdater::InitV(SGDEntry* e) {
     e->V[i] = (rand_r(&param_.seed) / (real_t)RAND_MAX - 0.5) * param_.V_init_scale;
   }
   memset(e->V+n, 0, n*sizeof(real_t));
+}
+
+void SGDUpdater::Save(bool save_aux, dmlc::Stream *fo) const{
+int saved = 0;
+  for (const auto& it : model_) {
+    if (it.second.Empty()) continue;
+    int n = param_.V_dim;
+    fo->Write(&it.first, sizeof(feaid_t));
+    fo->Write(&it.second.w, sizeof(real_t));
+    if (it.second.V) {
+      for (int i = 0; i < n; ++i) {
+        fo->Write(&it.second.V[i], sizeof(real_t));
+      }
+    }
+    if (save_aux) {
+      fo->Write(&(it.second.z), sizeof(real_t));
+      fo->Write(&(it.second.sqrt_g), sizeof(real_t));
+    }
+    saved ++ ;
+  }
+  LOG(INFO) << "saved " << saved << " kv pairs";
+}
+
+void SGDUpdater::Load(dmlc::Stream* fi, bool* has_aux){
+  std::cout << "load model \n";
+  int n = param_.V_dim;
+  while(true){
+    feaid_t id;
+    SGDEntry entry;
+    if(fi->Read(&id, sizeof(feaid_t))!=sizeof(feaid_t)) break;
+    fi->Read(&entry.w, sizeof(real_t));
+    for(int i=0; i< n; ++i){
+    }
+    model_.insert(std::make_pair(id, entry));
+  }
 }
 
 }  // namespace difacto

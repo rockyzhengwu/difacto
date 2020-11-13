@@ -3,7 +3,7 @@
 CXX = g++
 DEPS_PATH = $(shell pwd)/deps
 USE_CITY=0
-USE_LZ4=1
+USE_LZ4=0
 NO_REVERSE_ID=0
 
 all: build/difacto 
@@ -43,7 +43,7 @@ lbfgs/lbfgs_learner.o \
 store/store.o \
 tracker/tracker.o \
 reporter/reporter.o \
-data/localizer.o reader/batch_reader.o )
+data/localizer.o reader/batch_reader.o predicter.o )
 
 DMLC_DEPS = dmlc-core/libdmlc.a
 

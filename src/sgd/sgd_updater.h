@@ -26,6 +26,7 @@ struct SGDEntry {
   real_t w = 0, sqrt_g = 0, z = 0;
   /** \brief V and its aux data */
   real_t *V = nullptr;
+  bool Empty() const { return (w == 0 && fea_cnt == 0); }
 };
 /**
  * \brief sgd updater
@@ -41,13 +42,11 @@ class SGDUpdater : public Updater {
 
   KWArgs Init(const KWArgs& kwargs) override;
 
-  void Load(dmlc::Stream* fi, bool* has_aux) override {
-       // TODO(mli)
-  }
+  void Load(dmlc::Stream* fi, bool* has_aux) override ;
+  
 
-  void Save(bool save_aux, dmlc::Stream *fo) const override {
-    // TODO(mli)
-  }
+  void Save(bool save_aux, dmlc::Stream *fo) const override ;
+  
 
   void Get(const SArray<feaid_t>& fea_ids,
            int value_type,

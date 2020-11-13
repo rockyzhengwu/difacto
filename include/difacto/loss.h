@@ -7,6 +7,7 @@
 #define DIFACTO_LOSS_H_
 #include <string>
 #include <vector>
+#include <cmath>
 #include "./base.h"
 #include "dmlc/data.h"
 #include "dmlc/omp.h"

@@ -50,8 +50,8 @@ struct SGDLearnerParam : public dmlc::Parameter<SGDLearnerParam> {
     DMLC_DECLARE_FIELD(data_format).set_default("libsvm");
     DMLC_DECLARE_FIELD(data_in);
     DMLC_DECLARE_FIELD(data_val).set_default("");
-    DMLC_DECLARE_FIELD(model_out).set_default("");
-    DMLC_DECLARE_FIELD(model_in).set_default("");
+    DMLC_DECLARE_FIELD(model_out).set_default("fm.model");
+    DMLC_DECLARE_FIELD(model_in).set_default("fm.model");
     DMLC_DECLARE_FIELD(loss).set_default("fm");
     DMLC_DECLARE_FIELD(max_num_epochs).set_default(20);
     DMLC_DECLARE_FIELD(num_jobs_per_epoch).set_default(10);

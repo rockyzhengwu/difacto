@@ -6,6 +6,7 @@
 #include <memory>
 #include <vector>
 #include <string>
+#include <functional>
 #include "./base.h"
 #include "dmlc/io.h"
 #include "dmlc/parameter.h"

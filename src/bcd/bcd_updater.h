@@ -7,6 +7,7 @@
 #include <vector>
 #include <algorithm>
 #include <limits>
+#include <cmath>
 #include "difacto/updater.h"
 #include "dmlc/parameter.h"
 #include "dmlc/io.h"

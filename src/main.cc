@@ -5,6 +5,8 @@
 #include "common/arg_parser.h"
 #include "dmlc/parameter.h"
 #include "reader/converter.h"
+#include "difacto/predicter.h"
+
 namespace difacto {
 struct DifactoParam : public dmlc::Parameter<DifactoParam> {
   /**
@@ -59,7 +61,9 @@ int main(int argc, char *argv[]) {
     WarnUnknownKWArgs(param, converter.Init(kwargs_remain));
     converter.Run();
   } else if (param.task == "predict") {
-    LOG(FATAL) << "TODO";
+    Predicter* predicter = Predicter::Create("fm");
+    WarnUnknownKWArgs(param, predicter->Init(kwargs_remain));
+    predicter->Run();
   } else {
     LOG(FATAL) << "unknown task: " << param.task;
   }
