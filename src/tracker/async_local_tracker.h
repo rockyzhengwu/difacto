@@ -57,7 +57,7 @@ class AsyncLocalTracker {
    *
    * \param num_remains the maximal number of unfinished jobers
    */
-  void Wait(int num_remains = 0) {
+  void Wait(size_t num_remains = 0) {
     std::unique_lock<std::mutex> lk(mu_);
     fin_cond_.wait(lk, [this, num_remains] {
         return pending_.size() + running_.size() <= num_remains;

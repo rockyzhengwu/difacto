@@ -152,12 +152,15 @@ void SGDUpdater::Save(bool save_aux, dmlc::Stream *fo) const{
 int saved = 0;
   for (const auto& it : model_) {
     if (it.second.Empty()) continue;
+    std::cout << "feature_id: "<<it.first << "\n";
     int n = param_.V_dim;
     fo->Write(&it.first, sizeof(feaid_t));
     fo->Write(&it.second.w, sizeof(real_t));
     if (it.second.V) {
-      for (int i = 0; i < n; ++i) {
-        fo->Write(&it.second.V[i], sizeof(real_t));
+      if(save_aux){
+        fo->Write(&it.second.V, 2*n*sizeof(real_t));
+      }else{
+        fo->Write(&it.second.V, n*sizeof(real_t));
       }
     }
     if (save_aux) {
@@ -169,17 +172,29 @@ int saved = 0;
   LOG(INFO) << "saved " << saved << " kv pairs";
 }
 
-void SGDUpdater::Load(dmlc::Stream* fi, bool* has_aux){
+void SGDUpdater::Load(dmlc::Stream* fi, bool has_aux){
   std::cout << "load model \n";
   int n = param_.V_dim;
+  int v_dim = n;
   while(true){
     feaid_t id;
     SGDEntry entry;
     if(fi->Read(&id, sizeof(feaid_t))!=sizeof(feaid_t)) break;
     fi->Read(&entry.w, sizeof(real_t));
-    for(int i=0; i< n; ++i){
+    if(n>0){
+      if(has_aux){
+        v_dim = 2 * n;
+      }
+      entry.V = new real_t[v_dim];
+      for(int j=0; j<v_dim; ++j){
+        fi->Read(&entry.V[j], sizeof(real_t));
+      }
     }
-    model_.insert(std::make_pair(id, entry));
+    if(has_aux){
+      fi->Read(&entry.z, sizeof(real_t));
+      fi->Read(&entry.sqrt_g, sizeof(real_t));
+    }
+    model_[id] = entry;
   }
 }
 

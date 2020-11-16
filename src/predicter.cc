@@ -1,5 +1,8 @@
 #include "difacto/predicter.h"
 #include "./predict/fm_predicter.h"
+#include "reader/reader.h"
+#include <iostream>
+
 namespace difacto {
 
 DMLC_REGISTER_PARAMETER(FMPredicterParam);
@@ -20,6 +23,7 @@ Predicter* Predicter::Create(const std::string& type ) {
 
 KWArgs Predicter::Init(const KWArgs& kwargs){
   std::cout << "predict parent init function \n";
+
   return kwargs;
 }
 

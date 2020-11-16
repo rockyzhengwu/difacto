@@ -1,7 +1,7 @@
 /**
  *  Copyright (c) 2015 by Contributors
  */
-#include <gtest/gtest.h>
+#include "gtest/gtest.h"
 #include <unordered_map>
 #include "./utils.h"
 #include "common/kv_match.h"

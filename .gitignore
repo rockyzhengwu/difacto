@@ -31,3 +31,6 @@ deps/*
 build/*
 data/*
 *.gc*
+.vscode
+gtest
+fm.model

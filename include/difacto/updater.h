@@ -37,7 +37,7 @@ class Updater {
    * \param fi input stream
    * \param has_aux whether the loaded updater has aux data
    */
-  virtual void Load(dmlc::Stream* fi, bool* has_aux) = 0;
+  virtual void Load(dmlc::Stream* fi, bool has_aux) = 0;
 
   /**
    * \brief save the updater

@@ -8,7 +8,7 @@ NO_REVERSE_ID=0
 
 all: build/difacto 
 
-INCPATH = -I./src -I./include -I./dmlc-core/include -I./ps-lite/include -I./dmlc-core/src -I$(DEPS_PATH)/include
+INCPATH = -I./src -I./include -I./dmlc-core/include -I./ps-lite/include -I./dmlc-core/src -I$(DEPS_PATH)/include 
 PROTOC = ${DEPS_PATH}/bin/protoc
 CFLAGS = -std=c++11 -fopenmp -fPIC -O3 -ggdb -Wall -finline-functions $(INCPATH) -DDMLC_LOG_FATAL_THROW=0 $(ADD_CFLAGS)
 
@@ -43,7 +43,8 @@ lbfgs/lbfgs_learner.o \
 store/store.o \
 tracker/tracker.o \
 reporter/reporter.o \
-data/localizer.o reader/batch_reader.o predicter.o )
+data/localizer.o reader/batch_reader.o predicter.o \
+predict/fm_predicter.o )
 
 DMLC_DEPS = dmlc-core/libdmlc.a
 

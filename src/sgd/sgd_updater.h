@@ -42,7 +42,7 @@ class SGDUpdater : public Updater {
 
   KWArgs Init(const KWArgs& kwargs) override;
 
-  void Load(dmlc::Stream* fi, bool* has_aux) override ;
+  void Load(dmlc::Stream* fi, bool has_aux) override ;
   
 
   void Save(bool save_aux, dmlc::Stream *fo) const override ;

@@ -205,12 +205,39 @@ void SGDLearner::IterateData(const sgd::Job& job, sgd::Progress* progress) {
     auto feacnt = std::make_shared<std::vector<real_t>>();
     bool push_cnt =
         job.type == sgd::Job::kTraining && job.epoch == 0;
+    dmlc::RowBlock<feaid_t> blk = reader->Value();
+
+    // std::cout <<" part_idx: " << job.part_idx << "\n";
+    // std::cout << " num_parts: " << job.num_parts << "\n";
+    // std::cout << "batch_size: " << param_.batch_size << "\n";
+    // std::cout << "shuffle: " << param_.shuffle << "\n";
+    // for(size_t i=0; i<blk.size; ++i){
+    //   dmlc::Row<feaid_t> row = blk[i];
+    //   std::cout << "row " << i << " label:" << row.length << " ";
+    //   for(size_t j=0; j<row.length; ++j){
+    //     std::cout << row.get_index(j) << ":" << row.get_value(j) << " " ;
+    //   }
+    //   exit(0);
+    // }
+
     Localizer lc(-1, blk_nthreads_);
     lc.Compact(reader->Value(), data, feaids.get(), push_cnt ? feacnt.get() : nullptr);
-    // std::cout << feaids->size() << "feaids get \n";
-    // for(int i=0; i<feaids->size(); ++i){
-    //   std::cout << feaids->at(i) << "\n";
+    // std::cout << data->Size() << " feaids \n";
+    // for(size_t i=0; i< data->Size(); ++i){
+    //   std::cout << data->label[i] << "\n " ;
+    //   for(size_t j=0; j<data->index.size(); ++j){
+    //     std::cout << data->index[j] << ":" << data->value[j] << " " ;
+    //   }
+    //   std::cout << "\n";
+    //   exit(0);
     // }
+    // std::cout << "\n";
+    // exit(0);
+    // for(size_t i=0; i<feacnt->size(); ++i){
+    //   std::cout << feacnt->at(i) << "\n";
+    // }
+    // exit(0);
+   
 
     // save results into batch
     BatchJob batch;

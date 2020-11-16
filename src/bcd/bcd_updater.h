@@ -48,7 +48,7 @@ class BCDUpdater : public Updater {
 
   const BCDUpdaterParam& param() const { return param_; }
 
-  void Load(dmlc::Stream* fi, bool* has_aux) override {}
+  void Load(dmlc::Stream* fi, bool has_aux) override {}
 
   void Save(bool save_aux, dmlc::Stream *fo) const override {
   }

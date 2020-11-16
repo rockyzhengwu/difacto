@@ -18,7 +18,6 @@ void Localizer::CountUniqIndex(
   CHECK_LT(idx_size, static_cast<size_t>(std::numeric_limits<unsigned>::max()))
       << "you need to change Pair.i from unsigned to uint64";
   pair_.resize(idx_size);
-
 #pragma omp parallel for num_threads(nt_)
   for (size_t i = 0; i < idx_size; ++i) {
     pair_[i].k = ReverseBytes(blk.index[i] % max_index_);
