@@ -36,7 +36,7 @@ class FMPredicter: public Predicter{
     virtual ~FMPredicter(){}
 
     KWArgs Init(const KWArgs& kwargs) override;
-     
+    void GetPos(const SArray<int>& len, SArray<int>* w_pos, SArray<int>* V_pos) ;
     void PredictCli() override;
     
   private: 

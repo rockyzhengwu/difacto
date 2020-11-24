@@ -119,6 +119,7 @@ class BCDUpdater : public Updater {
  private:
   void InitWeights() {
     // remove tail features
+    std::cout << "init weights \n";
     CHECK_EQ(feaids_.size(), feacnt_.size());
     SArray<feaid_t> filtered;
     for (size_t i = 0; i < feaids_.size(); ++i) {

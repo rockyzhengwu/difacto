@@ -1,7 +1,8 @@
 /**
  * Copyright (c) 2015 by Contributors
  */
-#include "./batch_reader.h"
+#include "batch_reader.h"
+
 namespace difacto {
 
 BatchReader::BatchReader(

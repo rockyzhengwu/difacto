@@ -7,5 +7,10 @@
 namespace difacto {
 
 DMLC_REGISTER_PARAMETER(SGDUpdaterParam);
-
+void Updater::SaveAsTxt(const std::string& filename){
+  
+}
+void Updater::LoadTxt(const std::string& filename){
+  
+}
 }  // namespace difacto

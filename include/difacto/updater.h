@@ -45,6 +45,8 @@ class Updater {
    * \param fo output stream
    */
   virtual void Save(bool save_aux, dmlc::Stream *fo) const = 0;
+  virtual void SaveAsTxt(const std::string& filename);
+  virtual void LoadTxt(const std::string& filename);
   /**
    * \brief get the weights on the given features
    *

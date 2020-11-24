@@ -42,6 +42,8 @@ int main(int argc, char *argv[]) {
     LOG(ERROR) << "usage: difacto key1=val1 key2=val2 ...";
     return 0;
   }
+  std::cout << omp_get_num_threads() << "\n";
+  exit(0);
   using namespace difacto;
 
   // parse configuure

@@ -67,9 +67,10 @@ void SGDLearner::RunScheduler() {
     pre_loss = train_prog.loss;
     pre_val_auc = val_prog.auc;
   }
-  // todo save model
+  // save model 
   dmlc::Stream *ofs = CHECK_NOTNULL(dmlc::Stream::Create(param_.model_out.c_str(), "w"));
-  store_->updater()->Save(true, ofs);
+  store_->updater()->Save(false, ofs);
+  store_->updater()->SaveAsTxt("fm.dmodel.txt");
 }
 
 void SGDLearner::RunEpoch(int epoch, int job_type, sgd::Progress* prog) {
@@ -81,6 +82,7 @@ void SGDLearner::RunEpoch(int epoch, int job_type, sgd::Progress* prog) {
 
   // issue jobs
   int n = store_->NumWorkers() * param_.num_jobs_per_epoch;
+
   std::vector<std::pair<int, std::string>> jobs(n);
   for (int i = 0; i < n; ++i) {
     jobs[i].first = NodeID::kWorkerGroup;
@@ -198,15 +200,14 @@ void SGDLearner::IterateData(const sgd::Job& job, sgd::Progress* progress) {
                         job.num_parts,
                         256*1024*1024);
   }
+
   while (reader->Next()) {
     // map feature id into continous index
     auto data = new dmlc::data::RowBlockContainer<unsigned>();
     auto feaids = std::make_shared<std::vector<feaid_t>>();
     auto feacnt = std::make_shared<std::vector<real_t>>();
-    bool push_cnt =
-        job.type == sgd::Job::kTraining && job.epoch == 0;
-    dmlc::RowBlock<feaid_t> blk = reader->Value();
-
+    bool push_cnt = job.type == sgd::Job::kTraining && job.epoch == 0;
+    // dmlc::RowBlock<feaid_t> blk = reader->Value();
     // std::cout <<" part_idx: " << job.part_idx << "\n";
     // std::cout << " num_parts: " << job.num_parts << "\n";
     // std::cout << "batch_size: " << param_.batch_size << "\n";

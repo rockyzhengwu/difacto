@@ -46,7 +46,9 @@ class SGDUpdater : public Updater {
   
 
   void Save(bool save_aux, dmlc::Stream *fo) const override ;
-  
+  void SaveAsTxt(const std::string& filename) override;
+  void LoadTxt(const std::string& filename) override;
+
 
   void Get(const SArray<feaid_t>& fea_ids,
            int value_type,
